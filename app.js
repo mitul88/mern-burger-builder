@@ -7,6 +7,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.user('/user', userRouter);
+app.use('/user', userRouter);
 
 module.exports = app;
