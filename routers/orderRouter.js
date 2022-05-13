@@ -13,8 +13,13 @@ const newOrder = async (req, res) => {
     }
 }
 
+const orderList = async (req, res) => {
+    const orders = await Order.find({userId: req.user._id}).sort({orderTime: -1});
+    res.send(orders);
+}
+
 router.route('/')
-.get()
+.get(authorize, orderList)
 .post(authorize, newOrder)
 
 
