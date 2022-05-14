@@ -3,8 +3,6 @@ import axios from "axios";
 
 import jwt_decode from "jwt-decode";
 
-import env from "react-dotenv";
-
 export const authSuccess = (token, userId) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
@@ -36,7 +34,7 @@ export const auth = (email, password, mode) => dispatch =>{
         password: password,
     }
 
-    let url = "http://localhost:3001";
+    let url = process.env.REACT_APP_BACKEND_URL;
     let authUrl = null;
 
     if(mode === "register") {
