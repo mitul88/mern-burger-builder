@@ -35,13 +35,14 @@ export const auth = (email, password, mode) => dispatch =>{
         returnSecureToken: true,
     }
 
+    let url = "http://localhost:3001";
     let authUrl = null;
 
     if(mode === "register") {
-        authUrl="";
+        authUrl=`${url}/user`;
     }
      else {
-        authUrl="";
+        authUrl=`${url}/user/auth`;
     }
 
   
