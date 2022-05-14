@@ -7,7 +7,7 @@ const newOrder = async (req, res) => {
     const order = new Order(req.body);
     try{
         await order.save();
-        return res.status(201).send("Order places successfully");
+        return res.status(200).send("Order places successfully");
     } catch(err) {
         return res.status(400).send(("Something went wrong !!"));
     }

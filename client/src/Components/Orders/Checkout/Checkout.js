@@ -6,13 +6,10 @@ import axios from "axios";
 
 import {connect} from 'react-redux';
 
-import env from "react-dotenv";
-
 import Spinner from "../../Spinner/Spinner";
 
 import { resetIngredients } from '../../../redux/actionCreators';
 
-const firebase_api =env.API_URL;
 
 
 const mapStateToProps = state => {
@@ -73,7 +70,7 @@ class Checkout extends Component {
                     `${url}/order`, 
                     order,
                     {
-                        header: {
+                        headers: {
                             "Authorization": `Bearer ${this.props.token}`
                         }
                     }
@@ -98,7 +95,6 @@ class Checkout extends Component {
             .catch(err=> {
                 this.setState({isLoading: false});
             })
-            console.log(this.props.canPurchase)
     }
 
     render() {

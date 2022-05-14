@@ -48,7 +48,7 @@ export const auth = (email, password, mode) => dispatch =>{
 
     axios.post( authUrl, authData )
         .then(response=> {
-            if(response.status === 201) {
+            if(response.status === 200) {
                 dispatch(authLoading(false));
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('userId', response.data.user._id);

@@ -22,7 +22,7 @@ const newUser = async (req, res) => {
 
         const result = await user.save();
 
-        return res.status(201).send({
+        return res.status(200).send({
                 token: token,
                 // only send id and email, do not send result obj
                 user:_.pick(result, ["_id", "email"])
