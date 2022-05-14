@@ -67,7 +67,17 @@ class Checkout extends Component {
             orderCreatedAt: new Date(),
             userId: this.props.userId
         }
-        axios.post(firebase_api+"/orders.json?auth=" + this.props.token, order)
+
+        let url = process.env.REACT_APP_BACKEND_URL;
+        axios.post(
+                    `${url}/order`, 
+                    order,
+                    {
+                        header: {
+                            "Authorization": `Bearer ${this.props.token}`
+                        }
+                    }
+                )
             .then(response=> {
                 console.log(response.status)
                 if(response.status === 200) {
