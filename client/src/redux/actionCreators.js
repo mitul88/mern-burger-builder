@@ -45,8 +45,8 @@ export const orderLoadFaild = () => {
 }
 
 export const fetchOrders = (token, userId) => dispatch => {
-    const queryParams = '&orderBy="userId"&equalTo="'+ userId + '"';
-    axios.get('https://react-burgerbuilder-17b3f-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json?auth=' + token + queryParams)
+    const url =process.env.REACT_APP_BACKEND_URL;
+    axios.get(`${url}/order`, {headers:{'Authorization': `Bearer ${token}`}})
         .then(response=> {
             dispatch(loadOrders(response.data));
         })
