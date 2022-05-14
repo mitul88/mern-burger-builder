@@ -1,6 +1,8 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
 
+import jwt_decode from "jwt-decode";
+
 import env from "react-dotenv";
 
 export const authSuccess = (token, userId) => {
@@ -32,7 +34,6 @@ export const auth = (email, password, mode) => dispatch =>{
     const authData = {
         email: email,
         password: password,
-        returnSecureToken: true,
     }
 
     let url = "http://localhost:3001";
@@ -47,20 +48,21 @@ export const auth = (email, password, mode) => dispatch =>{
 
   
 
-    axios.post( authUrl + API_KEY, authData )
+    axios.post( authUrl, authData )
         .then(response=> {
-            if(response.status === 200) {
+            if(response.status === 201) {
                 dispatch(authLoading(false));
-                localStorage.setItem('token', response.data.idToken);
-                localStorage.setItem('userId', response.data.localId);
-                const expirationTime = new Date(new Date().getTime() + response.data.expiresIn * 1000);
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('userId', response.data.user._id);
+                let decoded = jwt_decode(response.data.token);
+                const expirationTime = new Date(decoded.exp *1000);
                 localStorage.setItem('expirationTime', expirationTime);
-                dispatch(authSuccess( response.data.idToken, response.data.localId ));
+                dispatch(authSuccess( response.data.token, response.data.user._id ));
             }
         })
         .catch(err=>{
                 dispatch(authLoading(false))
-                dispatch(authFailed(err.response.data.error.message))
+                dispatch(authFailed(err.response.data))
             } 
          )
 }
@@ -78,7 +80,6 @@ export const authCheck = () => dispatch => {
     const token = localStorage.getItem('token')
     if(!token) {
         dispatch(logout())
-
     } else {
         const expirationTime = new Date(localStorage.getItem('expirationTime'));
         if(expirationTime <= new Date()) {
