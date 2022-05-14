@@ -38,13 +38,13 @@ export const auth = (email, password, mode) => dispatch =>{
     let authUrl = null;
 
     if(mode === "register") {
-        authUrl="https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=";
+        authUrl="";
     }
      else {
-        authUrl="https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
+        authUrl="";
     }
 
-    let API_KEY= env.API_KEY;
+  
 
     axios.post( authUrl + API_KEY, authData )
         .then(response=> {
